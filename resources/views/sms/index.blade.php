@@ -107,6 +107,7 @@
         var output = document.querySelector("#output");
 
         var iti = window.intlTelInput(input, {
+            preferredCountries: ["us", "gb", "mv", "my"],
             hiddenInput: "phoneNumber",
             utilsScript: "/js/utils.js"
         });
