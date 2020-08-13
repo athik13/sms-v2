@@ -56,6 +56,7 @@ class SmsController extends Controller
             }
 
         } catch (\Nexmo\Client\Exception\Request $e) {
+            return $e;
             $log->error = 1;
             $log->error_message = $e;
             $log->save();
