@@ -13,7 +13,7 @@
     </li>
     @role('admin')
     <li class="nav-item">
-        <a class="nav-link {{ Request::is('received-sms') ? 'active' : '' }}" href="/received-sms">View Receivd Messages</a>
+        <a class="nav-link {{ Request::is('received-sms') ? 'active' : '' }}" href="/received-sms">View Received Messages</a>
     </li>
     @endrole
     @role('admin')
