@@ -130,7 +130,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    SMS MALDIVES
+                    {{ config('app.name', 'Laravel') }}
                 </div>
                 <span style="font-size: 200%">by bl4nk.dev</span>
             </div>
