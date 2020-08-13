@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\SingleMessage;
+use Illuminate\Support\Facades\Auth;
 
 class SmsController extends Controller
 {
@@ -53,7 +54,7 @@ class SmsController extends Controller
                 $log->status = $response['messages'][0]['status'];
                 $log->save();
 
-                return redirect('sms')->with('alert-success', "The message failed with status: " . $response['messages'][0]['status']);
+                return redirect('sms')->with('alert-danger', "The message failed with status: " . $response['messages'][0]['status']);
             }
 
         } catch (\Nexmo\Client\Exception\Request $e) {
@@ -62,7 +63,7 @@ class SmsController extends Controller
             $log->error_message = $e;
             $log->save();
 
-            return redirect('sms')->with('alert-success', "The message was not sent. Error: " . $e->getMessage());
+            return redirect('sms')->with('alert-danger', "The message was not sent. Error: " . $e->getMessage());
         }
     }
 

@@ -35,6 +35,7 @@
                                             <th>Phone Number</th>
                                             <th>State</th>
                                             <th>Sent At</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -57,6 +58,9 @@
                                                 @if($message->success == '0' AND $message->error == '0') The message is being sent @endif
                                             </td>
                                             <td>{{ $message->created_at->format('F d, Y h:m a') }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ url()->current() }}/delete/{{ $message->id }}" class="btn btn-danger" onclick="return confirm('Are you sure you would like to delete this? This process cannot be reversed.')">x</a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

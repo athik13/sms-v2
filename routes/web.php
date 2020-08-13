@@ -14,6 +14,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\User;
 use App\ReceivedSms;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,12 +39,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['auth'])->prefix('sms')->group(function () {
+Route::middleware(['auth', 'role: admin|user'])->prefix('sms')->group(function () {
     Route::get('/', 'SmsController@index');
     Route::post('/', 'SmsController@send');
 
-    Route::get('/group', 'SmsGroupController@index');
-    Route::post('/group', 'SmsGroupController@groupSend');
+    // Route::get('/group', 'SmsGroupController@index');
+    // Route::post('/group', 'SmsGroupController@groupSend');
 
     Route::prefix('groups')->group(function () {
         Route::prefix('manage')->group(function () {
@@ -58,8 +59,11 @@ Route::middleware(['auth'])->prefix('sms')->group(function () {
     Route::prefix('sent')->group(function () {
         Route::get('/', function() {
             $single_messages = SingleMessage::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(25);
-            
             return view('sms.sent-single', compact('single_messages'));
+        });
+        Route::get('/delete/{sms}', function (SingleMessage $sms) {
+            $sms->delete();
+            return redirect()->back();
         });
 
         Route::get('/group', function() {
@@ -81,7 +85,7 @@ Route::middleware(['auth'])->prefix('sms')->group(function () {
     });    
 });
 
-Route::middleware(['auth'])->prefix('users')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('users')->group(function () {
     Route::get('/', 'UserController@index');
     Route::post('/', 'UserController@create');
 
@@ -104,9 +108,24 @@ Route::middleware(['auth'])->prefix('users')->group(function () {
 
         return redirect()->back();
     });
+
+    Route::get('disable-user/{user}', function (User $user) {
+        $user->active = 0;
+        $user->syncRoles();
+        $user->save();
+
+        return redirect()->back();
+    });
+    Route::get('enable-user/{user}', function (User $user) {
+        $user->active = 1;
+        $user->syncRoles('user');
+        $user->save();
+
+        return redirect()->back();
+    });
 });
 
-Route::middleware(['auth'])->prefix('received-sms')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('received-sms')->group(function () {
     Route::get('/', function () {
         $received = ReceivedSms::paginate(25);
 

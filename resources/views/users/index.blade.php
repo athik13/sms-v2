@@ -40,7 +40,7 @@
                             <tbody>
                                 @foreach($users as $user)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->name }} @if ($user->active == 0) <span class="text-danger">[DISABLED]</span> @endif</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->getRoleNames() }}</td>
                                     <td>
@@ -52,13 +52,20 @@
                                     </td>
                                     <td>
                                         @if ($user->hasRole('admin'))
-                                        <a href="" class="btn btn-success disabled" disabled="disabled">Modify Message Left</a>
+                                        <a href="" class="btn btn-warning disabled" disabled="disabled">Modify Message Left</a>
                                             @if ($user->id !== 1)
                                                 <a href="{{ url()->current() }}/remove-role/{{ $user->id }}/admin" class="btn btn-info">Remove from Admin</a>
                                             @endif
                                         @else
-                                            <a href="{{ url()->current() }}/add-message/{{ $user->id }}" class="btn btn-success">Modify Message Left</a>
+                                            <a href="{{ url()->current() }}/add-message/{{ $user->id }}" class="btn btn-warning">Modify Message Left</a>
                                             <a href="{{ url()->current() }}/add-role/{{ $user->id }}/admin" class="btn btn-info">Make Admin</a>
+                                        @endif
+                                        @if ($user->id !== 1)
+                                            @if ($user->active == 1)
+                                            <a href="{{ url()->current() }}/disable-user/{{ $user->id }}" class="btn btn-danger">Disable</a>
+                                            @else
+                                            <a href="{{ url()->current() }}/enable-user/{{ $user->id }}" class="btn btn-success">Enable</a>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
