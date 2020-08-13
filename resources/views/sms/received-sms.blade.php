@@ -37,8 +37,8 @@
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>To</th>
                                             <th>From</th>
+                                            <th>To</th>
                                             <th>Message</th>
                                             <th>Type</th>
                                             <th>Received At</th>
