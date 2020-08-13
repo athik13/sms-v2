@@ -13,7 +13,7 @@
         <!-- Styles -->
         <style>
             .background {
-                background: linear-gradient(58deg, #add8e6, #57d1f5);
+                background-color: #101010;
             }
             html, body {
                 color: #636b6f;
@@ -24,26 +24,6 @@
                 background-repeat: no-repeat;
                 background-attachment: fixed;
                 overflow: hidden
-            }
-
-            #particles-js canvas {
-                display: block;
-                vertical-align: bottom;
-                -webkit-transform: scale(1);
-                -ms-transform: scale(1);
-                transform: scale(1);
-                opacity: 1;
-                -webkit-transition: opacity .8s ease, -webkit-transform 1.4s ease;
-                transition: opacity .8s ease, transform 1.4s ease
-            }
-
-            #particles-js {
-                width: 100%;
-                height: 100%;
-                position: fixed;
-                z-index: -10;
-                top: 0;
-                left: 0
             }
 
             .full-height {
@@ -72,6 +52,11 @@
 
             .title {
                 font-size: 60px;
+                color: #eee;
+            }
+
+            .title span {
+                color: #6cc312;
             }
 
             .links > a {
@@ -111,7 +96,6 @@
         </style>
     </head>
     <body class="background">
-        <div id="particles-js"></div>
 
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
@@ -130,16 +114,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{ config('app.name', 'Laravel') }}
+                    Message<span>sense</span> v2
                 </div>
             </div>
         </div>
-    
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-        <script>
-            particlesJS.load('particles-js', 'assets/particles.json', function() {
-                console.log('callback - particles.js config loaded');
-            });
-        </script>
     </body>
 </html>

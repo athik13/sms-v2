@@ -27,10 +27,14 @@
                                 <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
                             @endif
                         @endforeach
-                        <div class="col-md-12">
-                            <h5 class="text-center"><b>Messages Left:</b> {{ auth()->user()->messages_left }}</h5>
-                            <hr>
-                        </div>
+                        
+                        @if (!auth()->user()->hasRole('admin'))
+                            <div class="col-md-12">
+                                <h5 class="text-center"><b>Messages Left:</b> {{ auth()->user()->messages_left }}</h5>
+                                <hr>
+                            </div>
+                        @endif
+                        
                         <div class="mt-4">
                             <form class="form-horizontal" method="POST" autocomplete="off" action="{{ url()->current() }}">
                                 @csrf
