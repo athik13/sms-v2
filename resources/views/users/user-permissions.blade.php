@@ -31,15 +31,17 @@
                             @csrf
                             
                             @foreach ($permissions as $permission)
-                            <div class="form-check mb-2">
-                                <input type="checkbox" @if($user->can($permission)) checked @endif onchange="updatePermission('{{ $permission }}', '{{ $user->id }}', this)" data-plugin="switchery" data-color="#1bb99a" data-size="small"/>
-                                <label class="form-check-label"> {{ ucfirst($permission) }} </label>
+                            <div class="form-check form-control-lg mb-2">
+                                <label class="form-check-label"> 
+                                    <input type="checkbox" @if($user->can($permission)) checked @endif onchange="updatePermission('{{ $permission }}', '{{ $user->id }}', this)" data-plugin="switchery" data-color="#1bb99a" data-size="small">
+                                    {{ ucfirst($permission) }} 
+                                </label>
                             </div>
                             @endforeach
 
                             <div class="col">
                                 <div class="text-right">
-                                    <a href="/users" class="btn btn-success btn-block waves-effect waves-light"> <span>Save</span> </a>
+                                    <a href="/users" class="btn btn-success btn-block waves-effect waves-light"> <span>Back</span> </a>
                                 </div>
                             </div>
                         </form>
