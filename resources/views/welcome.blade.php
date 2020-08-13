@@ -132,7 +132,6 @@
                 <div class="title m-b-md">
                     {{ config('app.name', 'Laravel') }}
                 </div>
-                <span style="font-size: 200%">by bl4nk.dev</span>
             </div>
         </div>
     
