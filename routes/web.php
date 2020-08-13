@@ -33,6 +33,9 @@ Route::get('/', function () {
     $role_user = Role::firstOrCreate(['name' => 'user']);
 
     $permission = Permission::firstOrCreate(['name' => 'view received messages']);
+    $permission1 = Permission::firstOrCreate(['name' => 'delete messages']);
+
+    $role_admin->givePermissionTo('delete messages');
 
     return view('welcome');
 });
@@ -62,14 +65,19 @@ Route::middleware(['auth', 'role:admin|user'])->prefix('sms')->group(function ()
     Route::prefix('sent')->group(function () {
         Route::get('/', function() {
             if (auth()->user()->hasRole('admin')) {
-                $single_messages = SingleMessage::orderBy('created_at', 'desc')->paginate(25);
+                $single_messages = SingleMessage::withTrashed()->orderBy('created_at', 'desc')->paginate(25);
             } else {
                 $single_messages = SingleMessage::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(25);
             }
             return view('sms.sent-single', compact('single_messages'));
         });
-        Route::get('/delete/{sms}', function (SingleMessage $sms) {
-            $sms->delete();
+        Route::get('/delete/{id}', function ($id) {
+            $sms = SingleMessage::withTrashed()->where('id', $id)->first();
+            if (auth()->user()->hasRole('admin')) {
+                $sms->forceDelete();
+            } else {
+                $sms->delete();
+            }
             return redirect()->back();
         });
 

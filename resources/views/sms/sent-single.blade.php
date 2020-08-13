@@ -38,14 +38,16 @@
                                             <th>Phone Number</th>
                                             <th>State</th>
                                             <th>Sent At</th>
+                                            @can('delete messages')
                                             <th>Delete</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($single_messages as $message)
                                         <tr>
                                             @role('admin')
-                                            <td>{{ $message->user->name }}</td>
+                                            <td @if ($message->trashed()) class="bg-danger" @endif>{{ $message->user->name }}</td>
                                             @endrole
                                             <td>{{ $message->sender_id }}</td>
                                             <td>{{ $message->message }}</td>
@@ -64,9 +66,11 @@
                                                 @if($message->success == '0' AND $message->error == '0') The message is being sent @endif
                                             </td>
                                             <td>{{ $message->created_at->format('F d, Y h:m a') }}</td>
+                                            @can('delete messages')
                                             <td class="text-center">
                                                 <a href="{{ url()->current() }}/delete/{{ $message->id }}" class="btn btn-danger" onclick="return confirm('Are you sure you would like to delete this? This process cannot be reversed.')">x</a>
                                             </td>
+                                            @endcan
                                         </tr>
                                         @endforeach
                                     </tbody>
