@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
 
     <div class="row">
         <div class="col-lg-12">
@@ -48,9 +48,7 @@
                                             <td>{{ $message->user->name }}</td>
                                             @endrole
                                             <td>{{ $message->sender_id }}</td>
-                                            <td>
-                                                {!! wordwrap($message->message, 30, "<br>\n") !!}
-                                            </td>
+                                            <td>{{ $message->message }}</td>
                                             <td>{{ $message->phone_number }}</td>
                                             <td>
                                                 <?php
