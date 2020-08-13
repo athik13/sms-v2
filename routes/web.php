@@ -39,7 +39,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['auth', 'role: admin|user'])->prefix('sms')->group(function () {
+Route::middleware(['auth', 'role:admin|user'])->prefix('sms')->group(function () {
     Route::get('/', 'SmsController@index');
     Route::post('/', 'SmsController@send');
 
