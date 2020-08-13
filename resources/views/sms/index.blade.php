@@ -40,17 +40,17 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="senderId">Sender id</label>
-                                        <input class="form-control" id="senderId" maxlength="11" pattern="^(?=.*[a-zA-Z])(?=.*[a-zA-Z0-9])([a-zA-Z0-9 ]{1,11})$" name="senderId" type="text" placeholder="" class="form-control input-md" required="" title="Cannot Be Loner than 11 letter. Only letters and numbers allowed">
+                                        <input class="form-control" id="senderId" name="senderId" type="text" placeholder="" class="form-control input-md" required="" >
                                         <small class="form-text text-muted">Enter a sender Id here. It must be a combination of letters and numbers, It cannot be more than 11 characters.</small>
+                                        <small class="form-text text-muted">Note: US numbers cant receive alphanumeric sender id messages, for more information: <a target="_blank" href="https://support.twilio.com/hc/en-us/articles/223133767-International-support-for-Alphanumeric-Sender-ID">Read This</a></small>
                                     </div>
                                 </div>
 
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="phoneNumber">Phone Number</label>
-                                        <div class="input-group">
-                                            <input class="form-control" id="phoneNumber" name="phoneNumber" type="tel" autocomplete="off" required>
-                                        </div>
+                                        <p class="text-muted" id="output">Please enter a valid number below</p>
+                                        <input class="form-control" id="phoneNumber" type="tel" autocomplete="off" required>
                                     </div>
                                 </div>
 
@@ -98,8 +98,28 @@
 
 @section('script')
     <script src="/js/sms_counter.min.js"></script>
+    <script src="/js/intlTelInput.min.js"></script>
 
     <script>
         $('#message').countSms('#sms-counter');
+    
+        var input = document.querySelector("#phoneNumber");
+        var output = document.querySelector("#output");
+
+        var iti = window.intlTelInput(input, {
+            hiddenInput: "phoneNumber",
+            utilsScript: "/js/utils.js"
+        });
+
+        var handleChange = function() {
+            var text = (iti.isValidNumber()) ? "International: " + iti.getNumber() : "Please enter a number below";
+            var textNode = document.createTextNode(text);
+            output.innerHTML = "";
+            output.appendChild(textNode);
+        };
+
+        // listen to "keyup", but also "change" to update when the user selects a country
+        input.addEventListener('change', handleChange);
+        input.addEventListener('keyup', handleChange);
     </script>
 @endsection
