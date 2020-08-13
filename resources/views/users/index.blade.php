@@ -60,6 +60,7 @@
                                             <a href="{{ url()->current() }}/add-message/{{ $user->id }}" class="btn btn-warning">Modify Message Left</a>
                                             <a href="{{ url()->current() }}/add-role/{{ $user->id }}/admin" class="btn btn-info">Make Admin</a>
                                         @endif
+                                        
                                         @if ($user->id !== 1)
                                             @if ($user->active == 1)
                                             <a href="{{ url()->current() }}/disable-user/{{ $user->id }}" class="btn btn-danger">Disable</a>
@@ -67,6 +68,8 @@
                                             <a href="{{ url()->current() }}/enable-user/{{ $user->id }}" class="btn btn-success">Enable</a>
                                             @endif
                                         @endif
+
+                                        <a href="{{ url()->current() }}/user-permissions/{{ $user->id }}" class="btn btn-primary">Permissions</a>
                                     </td>
                                 </tr>
                                 @endforeach

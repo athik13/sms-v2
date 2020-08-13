@@ -15,6 +15,7 @@ use Spatie\Permission\Models\Permission;
 use App\User;
 use App\ReceivedSms;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     $role_admin = Role::firstOrCreate(['name' => 'admin']);
     $role_user = Role::firstOrCreate(['name' => 'user']);
+
+    $permission = Permission::firstOrCreate(['name' => 'view received messages']);
 
     return view('welcome');
 });
@@ -127,9 +130,28 @@ Route::middleware(['auth', 'role:admin'])->prefix('users')->group(function () {
 
         return redirect()->back();
     });
+
+    Route::get('user-permissions/{user}', function (User $user) {
+        $permissions = DB::table('permissions')->pluck('name')->toArray();
+        return view('users.user-permissions', compact('user', 'permissions'));
+    });
+
+    Route::post('user-permissions/{user}/update-permission', function (User $user, Request $request) {
+        if ($request->add == '1') {
+            $user->givePermissionTo($request->permission);
+            return response()->json([
+                'status' => 'permission given'
+            ]);
+        } else {
+            $user->revokePermissionTo($request->permission);
+            return response()->json([
+                'status' => 'permission revoked'
+            ]);
+        }
+    });
 });
 
-Route::middleware(['auth', 'role:admin'])->prefix('received-sms')->group(function () {
+Route::middleware(['auth', 'role:admin', 'permission:view received messages'])->prefix('received-sms')->group(function () {
     Route::get('/', function () {
         $received = ReceivedSms::paginate(25);
 

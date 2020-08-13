@@ -12,9 +12,11 @@
         <a class="nav-link {{ Request::is('sms/groups/manage') ? 'active' : '' }}" href="/sms/groups/manage">Manage SMS groups</a>
     </li> --}}
     @role('admin')
+    @can('view received messages')
     <li class="nav-item">
         <a class="nav-link {{ Request::is('received-sms') ? 'active' : '' }}" href="/received-sms">View Received Messages</a>
     </li>
+    @endcan
     @endrole
     @role('admin')
     <li class="nav-item">
