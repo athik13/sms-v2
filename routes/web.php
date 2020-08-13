@@ -58,7 +58,11 @@ Route::middleware(['auth', 'role:admin|user'])->prefix('sms')->group(function ()
 
     Route::prefix('sent')->group(function () {
         Route::get('/', function() {
-            $single_messages = SingleMessage::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(25);
+            if (auth()->user()->hasRole('admin')) {
+                $single_messages = SingleMessage::orderBy('created_at', 'desc')->paginate(25);
+            } else {
+                $single_messages = SingleMessage::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(25);
+            }
             return view('sms.sent-single', compact('single_messages'));
         });
         Route::get('/delete/{sms}', function (SingleMessage $sms) {

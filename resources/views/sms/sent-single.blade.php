@@ -30,6 +30,9 @@
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
+                                            @role('admin')
+                                            <th>User</th>
+                                            @endrole
                                             <th>Sender Id</th>
                                             <th>Message</th>
                                             <th>Phone Number</th>
@@ -41,8 +44,13 @@
                                     <tbody>
                                         @foreach($single_messages as $message)
                                         <tr>
+                                            @role('admin')
+                                            <td>{{ $message->user->name }}</td>
+                                            @endrole
                                             <td>{{ $message->sender_id }}</td>
-                                            <td>{{ $message->message }}</td>
+                                            <td>
+                                                {!! wordwrap($message->message, 30, "<br>\n") !!}
+                                            </td>
                                             <td>{{ $message->phone_number }}</td>
                                             <td>
                                                 <?php
