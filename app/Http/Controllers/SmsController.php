@@ -16,7 +16,7 @@ class SmsController extends Controller
     public function send(Request $request)
     {
         $phoneNumber = $request->phoneNumber;
-        return $phoneNumber;
+        // return $phoneNumber;
         $message = $request->message;
         $from = $request->senderId;
 

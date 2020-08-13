@@ -112,6 +112,11 @@ Route::middleware(['auth'])->prefix('received-sms')->group(function () {
 
         return view('sms.received-sms', compact('received'));
     });
+    Route::get('/delete/{sms}', function (ReceivedSms $sms) {
+        $sms->delete();
+
+        return redirect()->back();
+    });
 });
 
 Route::post('/nexmo/webhook/receive/sms', function(Request $request){

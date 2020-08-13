@@ -42,6 +42,7 @@
                                             <th>Message</th>
                                             <th>Type</th>
                                             <th>Received At</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,6 +53,9 @@
                                             <td>{{ $sms->message }}</td>
                                             <td>{{ $sms->type }}</td>
                                             <td>{{ $sms->timestamp }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ url()->current() }}/delete/{{ $sms->id }}" class="btn btn-danger" onclick="return confirm('Are you sure you would like to delete this? This process cannot be reversed.')">x</a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
