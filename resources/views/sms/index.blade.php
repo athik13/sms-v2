@@ -73,8 +73,8 @@
 
                                 <div class="form-group m-b-0">
                                     <div class="text-right">
-                                        <button type="button" class="btn btn-danger waves-effect waves-light m-r-5"> <span>Reset</span> <i class="mdi mdi-delete"></i></button>
-                                        <button class="btn btn-primary waves-effect waves-light"> <span>Send</span> <i class="mdi mdi-send ml-2"></i> </button>
+                                        <button type="button" class="btn btn-danger waves-effect waves-light m-r-5"> <span>Reset</span></button>
+                                        <button class="btn btn-primary waves-effect waves-light"> <span>Send</span></button>
                                     </div>
                                 </div>
 
