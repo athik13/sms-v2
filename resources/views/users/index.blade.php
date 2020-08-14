@@ -68,8 +68,9 @@
                                             <a href="{{ url()->current() }}/enable-user/{{ $user->id }}" class="btn btn-success">Enable</a>
                                             @endif
                                         @endif
-
-                                        <a href="{{ url()->current() }}/user-permissions/{{ $user->id }}" class="btn btn-primary">Permissions</a>
+                                        @if (auth()->user()->id == 1)
+                                            <a href="{{ url()->current() }}/user-permissions/{{ $user->id }}" class="btn btn-primary">Permissions</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
